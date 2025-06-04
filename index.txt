@@ -123,7 +123,7 @@
             } else if (periodo === 'tarde' && consulta === 'professores') {
                 link = 'https://drive.google.com/file/d/1gJlCCX35rwc6wwhzl5Vs18B3iBMg7lPT/view?usp=sharing';
             } else if ((periodo === 'manha' || periodo === 'tarde') && consulta === 'reserva') {
-                link = 'https://docs.google.com/spreadsheets/d/11oaiB1CNFmm9CQ9y7_FJqhwlWkhts5tolaif3VYlaqA/edit?usp=drivesdk';
+                link = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSu3db08vRQmLq9zEltrUeD52zIZ3ZkTCTpbjMSuRC20EPKi28E-A4K6zhMvfPYYVCoglVg-5RFEC0T/pubhtml';
             } else if ((periodo === 'manha' || periodo === 'tarde') && consulta === 'responsável') {
                 link = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTykq4DO_SYAh9me31mET9Ock5ll9iWn9fccOw-pTsPC2DujuIgqBzSrUJyHjRlZA/pubhtml?gid=1395225465&single=true';
             }
