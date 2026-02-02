@@ -91,7 +91,9 @@
                 <option value="salas">Salas - Séries e Turmas</option>
                 <option value="professores">Horário dos Professores</option>
                 <option value="reserva">Reserva de Salas</option>
-		  <option value="responsável">Projetos da Pasta</option>
+		        <option value="responsável">Projetos da Pasta</option>
+				<option value="tabeladoM">TAB - manhã</option>
+				<option value="tabeladoT">TAB - tarde</option>
             </select>
         </div>
 <p>
@@ -105,7 +107,16 @@
     <br>
 </p>
     <div class="footer">
-        <p>Desenvolvido por ChatGPT | Página Responsiva</p>
+<p>
+        <a href="https://soloist.ai/caetanodecampos">
+            Acesso planos de aula
+        </a>
+    </p>
+		<p>
+        <a href="https://eecaetano.github.io/consultahorario2025/celular.html">
+            Acesso aparelho móvel
+        </a>
+    </p>
     </div>
 
     <script>
@@ -115,17 +126,21 @@
             var link = '';
 
             if (periodo === 'manha' && consulta === 'salas') {
-                link = 'https://drive.google.com/file/d/1sRH-DQRCeVn40Ys1wUOS7XV1BjGP-5ux/view?usp=sharing';
+                link = 'https://drive.google.com/file/d/1D48q3kgDMGc8YMxzeRqsv6nCChZWT1_b/view?usp=sharing';
             } else if (periodo === 'tarde' && consulta === 'salas') {
-                link = 'https://drive.google.com/file/d/1DNI4as1tbeIv_e7R-Dt4m2jDa30ULtZi/view?usp=sharing';
+                link = 'https://drive.google.com/file/d/1XRSBMViNVFxVqafAFm6lmKQPw4kdVFyh/view?usp=sharing';
             } else if (periodo === 'manha' && consulta === 'professores') {
-                link = 'https://drive.google.com/file/d/1qMzDWrAmgCW97OHa0SZgmqRLo-oziS34/view?usp=sharing';
+                link = 'https://drive.google.com/file/d/1d8mOtIMI8avP71uPFwkuFEfKwIgFK85r/view?usp=sharing';
             } else if (periodo === 'tarde' && consulta === 'professores') {
-                link = 'https://drive.google.com/file/d/1gJlCCX35rwc6wwhzl5Vs18B3iBMg7lPT/view?usp=sharing';
+                link = 'https://drive.google.com/file/d/1cRgInPQtgzgCBFoK14evorMnPB39TZgW/view?usp=sharing';
             } else if ((periodo === 'manha' || periodo === 'tarde') && consulta === 'reserva') {
-                link = 'https://drive.google.com/file/d/18X7RW-tcaGg_kfG89-zo4rE8gIb8v1hV/view?usp=sharing';
+                link = 'https://eecaetano.github.io/consultahorario2025/sorry.html';
             } else if ((periodo === 'manha' || periodo === 'tarde') && consulta === 'responsável') {
-                link = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTykq4DO_SYAh9me31mET9Ock5ll9iWn9fccOw-pTsPC2DujuIgqBzSrUJyHjRlZA/pubhtml?gid=1395225465&single=true';
+                link = 'https://eecaetano.github.io/consultahorario2025/sorry.html';
+            } else if ((periodo === 'manha' || periodo === 'tarde') && consulta === 'tabeladoM') {
+                link = 'https://drive.google.com/file/d/12E2IMJpzFLZwhBSqH2tPDfUxo2rGHlOP/view?usp=sharing';
+            } else if ((periodo === 'manha' || periodo === 'tarde') && consulta === 'tabeladoT') {
+                link = 'https://drive.google.com/file/d/1ii4NNx2EuIRpbXCfeJQi3bwXSqjnnB7A/view?usp=sharing';
             }
 
             if (link) {
@@ -137,4 +152,3 @@
     </script>
 </body>
 </html>
-          
