@@ -121,6 +121,89 @@ footer {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* POP-UP */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.popup-card {
+  background: #fff;
+  color: #333;
+  max-width: 360px;
+  width: 90%;
+  padding: 24px 22px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  text-align: center;
+  animation: popupIn 0.4s ease;
+  position: relative;
+}
+
+.popup-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.popup-card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.popup-card p {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.popup-card a {
+  color: #2575fc;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.popup-card hr {
+  margin: 14px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.popup-card button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 12px;
+  background: #2575fc;
+  color: #fff;
+  cursor: pointer;
+}
+
+.popup-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@keyframes popupIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 </style>
 </head>
 
@@ -165,6 +248,36 @@ footer {
   <p>Abrindo horário...</p>
 </div>
 
+ <!-- POP-UP AVISO -->
+<div class="popup-overlay" id="popupAviso">
+  <div class="popup-card">
+    <span class="popup-close" onclick="fecharPopup()">×</span>
+
+    <div class="popup-icon">📢</div>
+
+    <h2>Atenção, Professor(a)!</h2>
+
+    <p>
+      📘 <strong>Lembre-se de entregar o seu plano de aula!</strong><br>
+      <a href="https://eecaetano.github.io/consultahorario2025/planodeaula.html" target="_blank">
+        Clique aqui para acessar
+      </a>
+    </p>
+
+    <hr>
+
+    <p>
+      🚀 <strong>Já realizou sua inscrição no Multiplica 2026?</strong><br>
+      Não perca o prazo!<br>
+      <a href="https://share.google/VAWtyMkVPoeohCOtZ" target="_blank">
+        Clique aqui e confira as datas
+      </a>
+    </p>
+
+    <button onclick="naoMostrarHoje()">Não mostrar novamente hoje</button>
+  </div>
+</div>
+ 
 <script>
 function consultarHorario() {
   const periodo = document.getElementById('periodo').value;
@@ -203,5 +316,35 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
+<script>
+function abrirPopup() {
+  const naoMostrar = localStorage.getItem('popupHoje');
+  if (!naoMostrar) {
+    document.getElementById('popupAviso').style.display = 'flex';
+  }
+}
+
+function fecharPopup() {
+  document.getElementById('popupAviso').style.display = 'none';
+}
+
+function naoMostrarHoje() {
+  const hoje = new Date().toLocaleDateString();
+  localStorage.setItem('popupHoje', hoje);
+  fecharPopup();
+}
+
+// Exibe ao carregar a página
+window.addEventListener('load', () => {
+  const hoje = new Date().toLocaleDateString();
+  const salvo = localStorage.getItem('popupHoje');
+  if (salvo !== hoje) {
+    localStorage.removeItem('popupHoje');
+  }
+  abrirPopup();
+});
+</script>
+
 </body>
 </html>
+
