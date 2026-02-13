@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Área Restrita</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f3b73, #1f5fa8);
+      color: #ffffff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 40px 30px;
+      border-radius: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: #ffffff;
+      color: #0f3b73;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #e6e6e6;
+      transform: translateY(-2px);
+    }
+
+    .erro {
+      margin-top: 12px;
+      color: #ffd2d2;
+      font-size: 14px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>ÁREA RESTRITA</h1>
+
+    <input
+      type="password"
+      id="senha"
+      placeholder="Digite a senha"
+      onkeypress="if(event.key==='Enter') verificarSenha()"
+    />
+
+    <button onclick="verificarSenha()">Entrar</button>
+
+    <div class="erro" id="erro">Senha incorreta. Tente novamente.</div>
+  </div>
+
+  <script>
+    function verificarSenha() {
+      const senhaCorreta = "Caetano2026@";
+      const senhaDigitada = document.getElementById("senha").value;
+
+      if (senhaDigitada === senhaCorreta) {
+        window.location.href = "https://caetanodecampos.my.canva.site/planosdeaula";
+      } else {
+        document.getElementById("erro").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
