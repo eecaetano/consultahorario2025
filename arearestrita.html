@@ -78,6 +78,14 @@
 </head>
 
 <body>
+  <div style="display:flex; flex-direction:column; gap:20px; width:100%; align-items:center;">
+
+  <div class="container">
+    <h1>DOCUMENTOS PEDAGÓGICOS</h1>
+
+    <button onclick="window.location.href='https://caetanodecampos.my.canva.site/documentos'">Entrar</button>
+  </div>
+
   <div class="container">
     <h1>ÁREA RESTRITA</h1>
 
@@ -93,7 +101,9 @@
     <div class="erro" id="erro">Senha incorreta. Tente novamente.</div>
   </div>
 
-  <script>
+</div>
+
+<script>
     function verificarSenha() {
       const senhaCorreta = "Caetano2026@";
       const senhaDigitada = document.getElementById("senha").value;
