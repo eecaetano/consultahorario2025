@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Consulta de Horários</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2575fc">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 100svh;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  color: #fff;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  border-radius: 22px;
+  padding: 28px 24px;
+  box-shadow: 0 16px 35px rgba(0,0,0,0.25);
+  text-align: center;
+}
+
+.icon {
+  font-size: 3.2rem;
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-size: 1.9rem;
+  margin-bottom: 6px;
+}
+
+p {
+  font-size: 0.95rem;
+  opacity: 0.95;
+  margin-bottom: 22px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+label {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  display: block;
+}
+
+select {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.95);
+  color: #333;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #2575fc;
+  cursor: pointer;
+}
+
+footer {
+  margin-top: 18px;
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+
+/* LOADING SCREEN */
+.loading {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 55px;
+  height: 55px;
+  border: 5px solid rgba(255,255,255,0.3);
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* POP-UP */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.popup-card {
+  background: #fff;
+  color: #333;
+  max-width: 360px;
+  width: 90%;
+  padding: 24px 22px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  text-align: center;
+  animation: popupIn 0.4s ease;
+  position: relative;
+}
+
+.popup-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.popup-card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.popup-card p {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.popup-card a {
+  color: #2575fc;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.popup-card hr {
+  margin: 14px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.popup-card button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 12px;
+  background: #2575fc;
+  color: #fff;
+  cursor: pointer;
+}
+
+.popup-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@keyframes popupIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="icon">📅</div>
+  <h1>Consulta de Horários</h1>
+  <p>Escolha o período e o tipo de consulta</p>
+
+  <div class="form-group">
+    <label for="periodo">Período</label>
+    <select id="periodo">
+      <option value="manha">Manhã</option>
+      <option value="tarde">Tarde</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="consulta">Consulta</label>
+    <select id="consulta">
+      <option value="salas">Salas / Turmas</option>
+      <option value="professores">Professores</option>
+      <option value="reserva">Reserva de Salas</option>
+      <option value="responsável">Projetos</option>
+      <option value="tabeladoM">TAB – Manhã</option>
+      <option value="tabeladoT">TAB – Tarde</option>
+    </select>
+  </div>
+
+  <button onclick="consultarHorario()">Consultar</button>
+
+  <footer>
+    © 2026 • <br>
+    Planos de aula
+  </footer>
+</div>
+
+<!-- LOADING -->
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <p>Abrindo horário...</p>
+</div>
+
+ <!-- POP-UP AVISO -->
+<div class="popup-overlay" id="popupAviso">
+  <div class="popup-card">
+    <span class="popup-close" onclick="fecharPopup()">×</span>
+
+    <div class="popup-icon">📢</div>
+
+    <h2>Atenção, Professor(a)!</h2>
+
+    <p>
+      📘 <strong>Lembre-se de entregar o seu plano de aula!</strong><br>
+      <a href="https://eecaetano.github.io/consultahorario2025/planodeaula.html" target="_blank">
+        Clique aqui para acessar
+      </a>
+    </p>
+
+    <hr>
+
+    <p>
+      🚀 <strong>Já realizou sua inscrição no Multiplica 2026?</strong><br>
+      Não perca o prazo!<br>
+      <a href="https://drive.google.com/file/d/1-I9itz8EO81VYLKM33Y3oAOwhfH0ZKxC/view?usp=drive_link" target="_blank">
+        Clique aqui e confira as datas
+      </a>
+    </p>
+
+    <button onclick="naoMostrarHoje()">Não mostrar novamente hoje</button>
+  </div>
+</div>
+ 
+<script>
+function consultarHorario() {
+  const periodo = document.getElementById('periodo').value;
+  const consulta = document.getElementById('consulta').value;
+  let link = '';
+
+  if (periodo === 'manha' && consulta === 'salas') {
+    link = 'https://drive.google.com/file/d/1D48q3kgDMGc8YMxzeRqsv6nCChZWT1_b/view';
+  } else if (periodo === 'tarde' && consulta === 'salas') {
+    link = 'https://drive.google.com/file/d/1XRSBMViNVFxVqafAFm6lmKQPw4kdVFyh/view';
+  } else if (periodo === 'manha' && consulta === 'professores') {
+    link = 'https://drive.google.com/file/d/1d8mOtIMI8avP71uPFwkuFEfKwIgFK85r/view';
+  } else if (periodo === 'tarde' && consulta === 'professores') {
+    link = 'https://drive.google.com/file/d/1cRgInPQtgzgCBFoK14evorMnPB39TZgW/view';
+  } else if (consulta === 'reserva' || consulta === 'responsável') {
+    link = 'https://eecaetano.github.io/consultahorario2025/sorry.html';
+  } else if (consulta === 'tabeladoM') {
+    link = 'https://drive.google.com/file/d/12E2IMJpzFLZwhBSqH2tPDfUxo2rGHlOP/view';
+  } else if (consulta === 'tabeladoT') {
+    link = 'https://drive.google.com/file/d/1ii4NNx2EuIRpbXCfeJQi3bwXSqjnnB7A/view';
+  }
+
+  if (link) {
+    document.getElementById('loading').style.display = 'flex';
+    setTimeout(() => {
+      window.location.href = link;
+    }, 900);
+  } else {
+    alert('Selecione as opções corretamente.');
+  }
+}
+
+/* SERVICE WORKER */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+
+<script>
+function abrirPopup() {
+  const naoMostrar = localStorage.getItem('popupHoje');
+  if (!naoMostrar) {
+    document.getElementById('popupAviso').style.display = 'flex';
+  }
+}
+
+function fecharPopup() {
+  document.getElementById('popupAviso').style.display = 'none';
+}
+
+function naoMostrarHoje() {
+  const hoje = new Date().toLocaleDateString();
+  localStorage.setItem('popupHoje', hoje);
+  fecharPopup();
+}
+
+// Exibe ao carregar a página
+window.addEventListener('load', () => {
+  const hoje = new Date().toLocaleDateString();
+  const salvo = localStorage.getItem('popupHoje');
+  if (salvo !== hoje) {
+    localStorage.removeItem('popupHoje');
+  }
+  abrirPopup();
+});
+</script>
+
+</body>
+</html>
