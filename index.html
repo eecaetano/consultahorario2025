@@ -1,391 +1,335 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Consulta de Horários</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Consulta de Horários</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2575fc">
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2575fc">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/swiper@11/swiper-bundle.min.css"
-/>
+  <!-- Swiper CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/swiper@11/swiper-bundle.min.css"
+  />
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-body {
-  min-height: 100svh;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  color: #fff;
-}
+    body {
+      min-height: 100svh;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      color: #fff;
+    }
 
-.container {
-  width: 100%;
-  max-width: 420px;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(10px);
-  border-radius: 22px;
-  padding: 28px 24px;
-  box-shadow: 0 16px 35px rgba(0,0,0,0.25);
-  text-align: center;
-}
+    .container {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      padding: 28px 24px;
+      box-shadow: 0 16px 35px rgba(0,0,0,0.25);
+      text-align: center;
+    }
 
-.icon {
-  font-size: 3.2rem;
-  margin-bottom: 8px;
-}
+    .icon {
+      font-size: 3.2rem;
+      margin-bottom: 8px;
+    }
 
-h1 {
-  font-size: 1.9rem;
-  margin-bottom: 6px;
-}
+    h1 {
+      font-size: 1.9rem;
+      margin-bottom: 6px;
+    }
 
-p {
-  font-size: 0.95rem;
-  opacity: 0.95;
-  margin-bottom: 22px;
-}
+    p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      margin-bottom: 22px;
+    }
 
-.form-group {
-  margin-bottom: 18px;
-  text-align: left;
-}
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
 
-label {
-  font-size: 0.95rem;
-  margin-bottom: 6px;
-  display: block;
-}
+    label {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      display: block;
+    }
 
-select {
-  width: 100%;
-  padding: 14px;
-  font-size: 1rem;
-  border-radius: 14px;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.95);
-  color: #333;
-}
+    select {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      border-radius: 14px;
+      border: none;
+      outline: none;
+      background: rgba(255,255,255,0.95);
+      color: #333;
+    }
 
-button {
-  width: 100%;
-  padding: 16px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 16px;
-  background: #ffffff;
-  color: #2575fc;
-  cursor: pointer;
-}
+    button {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 16px;
+      background: #ffffff;
+      color: #2575fc;
+      cursor: pointer;
+    }
 
-footer {
-  margin-top: 18px;
-  font-size: 0.78rem;
-  opacity: 0.85;
-}
+    footer {
+      margin-top: 18px;
+      font-size: 0.78rem;
+      opacity: 0.85;
+    }
 
-/* LOADING SCREEN */
-.loading {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 9999;
-}
+    /* LOADING */
+    .loading {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
 
-.spinner {
-  width: 55px;
-  height: 55px;
-  border: 5px solid rgba(255,255,255,0.3);
-  border-top: 5px solid #fff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 15px;
-}
+    .spinner {
+      width: 55px;
+      height: 55px;
+      border: 5px solid rgba(255,255,255,0.3);
+      border-top: 5px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
 
-/* POP-UP */
-.popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999;
-}
+    /* POPUP */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+    }
 
-.popup-card {
-  background: #fff;
-  color: #333;
-  max-width: 360px;
-  width: 90%;
-  padding: 24px 22px;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-  text-align: center;
-  animation: popupIn 0.4s ease;
-  position: relative;
-}
+    .popup-card {
+      background: #fff;
+      color: #333;
+      max-width: 360px;
+      width: 90%;
+      padding: 24px 22px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+      text-align: center;
+      position: relative;
+    }
 
-.popup-icon {
-  font-size: 3rem;
-  margin-bottom: 10px;
-}
+    .popup-close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
 
-.popup-card h2 {
-  font-size: 1.4rem;
-  margin-bottom: 12px;
-}
+    .popup-card p {
+      margin-bottom: 12px;
+    }
 
-.popup-card p {
-  font-size: 0.95rem;
-  margin-bottom: 12px;
-}
+    .popup-card a {
+      color: #2575fc;
+      font-weight: 600;
+      text-decoration: none;
+    }
 
-.popup-card a {
-  color: #2575fc;
-  font-weight: 600;
-  text-decoration: none;
-}
+    .avisoSwiper {
+      margin-top: 10px;
+    }
 
-.popup-card hr {
-  margin: 14px 0;
-  border: none;
-  border-top: 1px solid #ddd;
-}
-
-.popup-card button {
-  margin-top: 10px;
-  width: 100%;
-  padding: 10px;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 12px;
-  background: #2575fc;
-  color: #fff;
-  cursor: pointer;
-}
-
-.popup-close {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-@keyframes popupIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-.avisoSwiper {
-  margin-top: 10px;
-}
-
-.swiper-slide {
-  padding: 10px;
-
-}
-</style>
+    .swiper-slide {
+      padding: 10px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
-  <div class="icon">📅</div>
-  <h1>Consulta de Horários</h1>
-  <p>Escolha o período e o tipo de consulta</p>
+  <div class="container">
+    <div class="icon">📅</div>
+    <h1>Consulta de Horários</h1>
+    <p>Escolha o período e o tipo de consulta</p>
 
-  <div class="form-group">
-    <label for="periodo">Período</label>
-    <select id="periodo">
-      <option value="manha">Manhã</option>
-      <option value="tarde">Tarde</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="consulta">Consulta</label>
-    <select id="consulta">
-      <option value="salas">Salas / Turmas</option>
-      <option value="professores">Professores</option>
-      <option value="reserva">Reserva de Salas</option>
-      <option value="responsável">Projetos</option>
-      <option value="tabeladoM">TAB – Manhã</option>
-      <option value="tabeladoT">TAB – Tarde</option>
-    </select>
-  </div>
-
-  <button onclick="consultarHorario()">Consultar</button>
-
-  <footer>
-    © 2026 • <br>
-    EECC
-  </footer>
-</div>
-
-<!-- LOADING -->
-<div class="loading" id="loading">
-  <div class="spinner"></div>
-  <p>Abrindo horário...</p>
-</div>
-
-<!-- POP-UP AVISO -->
-<div class="popup-overlay" id="popupAviso">
-  <div class="popup-card">
-
-    <span class="popup-close" onclick="fecharPopup()">×</span>
-
-    <div class="swiper avisoSwiper">
-      <div class="swiper-wrapper">
-
-        <!-- SLIDE 1 -->
-        <div class="swiper-slide">
-          <p>
-            <strong>Lembre-se de entregar o seu plano de aula!</strong><br>
-            https://eecaetano.github.io/consultahorario2025/planodeaula.html
-              Clique aqui para acessar
-            </a>
-          </p>
-        </div>
-
-        <!-- SLIDE 2 -->
-        <div class="swiper-slide">
-          <p>
-            <strong>Recadastramento Digital 2026</strong><br>
-            A partir de 01/04/2026, o processo deve ser feito no mês do aniversário.<br>
-            https://www.sou.sp.gov.br/sou.sp/recadastramento2025
-          </p>
-        </div>
-
-        <!-- SLIDE 3 -->
-        <div class="swiper-slide">
-          <p>
-            <strong>Planejamento de aula AVA EFAPE</strong><br>
-            Lembre-se: é semanal.<br>
-            https://avaefape.educacao.sp.gov.br/login/index.php
-              Acessar AVA
-            </a>
-          </p>
-        </div>
-
-      </div>
-
-      <!-- PAGINAÇÃO -->
-      <div class="swiper-pagination"></div>
+    <div class="form-group">
+      <label for="periodo">Período</label>
+      <select id="periodo">
+        <option value="manha">Manhã</option>
+        <option value="tarde">Tarde</option>
+      </select>
     </div>
 
-    <button onclick="naoMostrarHoje()">Não mostrar novamente hoje</button>
+    <div class="form-group">
+      <label for="consulta">Consulta</label>
+      <select id="consulta">
+        <option value="salas">Salas / Turmas</option>
+        <option value="professores">Professores</option>
+        <option value="reserva">Reserva de Salas</option>
+        <option value="responsável">Projetos</option>
+        <option value="tabeladoM">TAB – Manhã</option>
+        <option value="tabeladoT">TAB – Tarde</option>
+      </select>
+    </div>
 
+    <button onclick="consultarHorario()">Consultar</button>
+
+    <footer>
+      © 2026 • <br>
+      EECC
+    </footer>
   </div>
-</div>
- 
-<script>
-function consultarHorario() {
-  const periodo = document.getElementById('periodo').value;
-  const consulta = document.getElementById('consulta').value;
-  let link = '';
 
-  if (periodo === 'manha' && consulta === 'salas') {
-    link = 'https://drive.google.com/file/d/1D48q3kgDMGc8YMxzeRqsv6nCChZWT1_b/view';
-  } else if (periodo === 'tarde' && consulta === 'salas') {
-    link = 'https://drive.google.com/file/d/1XRSBMViNVFxVqafAFm6lmKQPw4kdVFyh/view';
-  } else if (periodo === 'manha' && consulta === 'professores') {
-    link = 'https://drive.google.com/file/d/1d8mOtIMI8avP71uPFwkuFEfKwIgFK85r/view';
-  } else if (periodo === 'tarde' && consulta === 'professores') {
-    link = 'https://drive.google.com/file/d/1cRgInPQtgzgCBFoK14evorMnPB39TZgW/view';
-  } else if (consulta === 'reserva' || consulta === 'responsável') {
-    link = 'https://drive.google.com/file/d/18pzuHCD-bfLUu4Lxhny6rppRyzwDz_vh/view?usp=drivesdk';
-  } else if (consulta === 'tabeladoM') {
-    link = 'https://drive.google.com/file/d/12E2IMJpzFLZwhBSqH2tPDfUxo2rGHlOP/view';
-  } else if (consulta === 'tabeladoT') {
-    link = 'https://drive.google.com/file/d/1ii4NNx2EuIRpbXCfeJQi3bwXSqjnnB7A/view';
-  }
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Abrindo horário...</p>
+  </div>
 
-  if (link) {
-    document.getElementById('loading').style.display = 'flex';
-    setTimeout(() => {
-      window.location.href = link;
-    }, 900);
-  } else {
-    alert('Selecione as opções corretamente.');
-  }
-}
+  <!-- POPUP -->
+  <div class="popup-overlay" id="popupAviso">
+    <div class="popup-card">
+      <span class="popup-close" onclick="fecharPopup()">×</span>
 
-/* SERVICE WORKER */
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
-</script>
+      <div class="swiper avisoSwiper">
+        <div class="swiper-wrapper">
 
-<script>
-function abrirPopup() {
-  const naoMostrar = localStorage.getItem('popupHoje');
-  if (!naoMostrar) {
-    document.getElementById('popupAviso').style.display = 'flex';
-  }
-}
+          <div class="swiper-slide">
+            <p>
+              <strong>Plano de Aula</strong><br>
+              <a href="https://eecaetano.github.io/consultahorario2025/planodeaula.html" target="_blank">
+                Clique aqui para acessar
+              </a>
+            </p>
+          </div>
 
-function fecharPopup() {
-  document.getElementById('popupAviso').style.display = 'none';
-}
+          <div class="swiper-slide">
+            <p>
+              <strong>Recadastramento Digital 2026</strong><br>
+              <a href="https://www.sou.sp.gov.br/sou.sp/recadastramento2025" target="_blank">
+                Saiba mais
+              </a>
+            </p>
+          </div>
 
-function naoMostrarHoje() {
-  const hoje = new Date().toLocaleDateString();
-  localStorage.setItem('popupHoje', hoje);
-  fecharPopup();
-}
+          <div class="swiper-slide">
+            <p>
+              <strong>AVA EFAPE</strong><br>
+              <a href="https://avaefape.educacao.sp.gov.br/login/index.php" target="_blank">
+                Acessar AVA
+              </a>
+            </p>
+          </div>
 
-// Exibe ao carregar a página
-window.addEventListener('load', () => {
-  const hoje = new Date().toLocaleDateString();
-  const salvo = localStorage.getItem('popupHoje');
-  if (salvo !== hoje) {
-    localStorage.removeItem('popupHoje');
-  }
-  abrirPopup();
-});
-.com/swiper@11/swiper-bundle.min.js"
+        </div>
 
-<script>
-  const avisoSwiper = new Swiper('.avisoSwiper', {
-    loop: false,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true
-    },
-    spaceBetween: 16
-  });
-</script>
+        <div class="swiper-pagination"></div>
+      </div>
+
+      <button onclick="naoMostrarHoje()">Não mostrar novamente hoje</button>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    const avisoSwiper = new Swiper('.avisoSwiper', {
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    });
+
+    function consultarHorario() {
+      const periodo = document.getElementById('periodo').value;
+      const consulta = document.getElementById('consulta').value;
+      let link = '';
+
+      if (periodo === 'manha' && consulta === 'salas') {
+        link = 'https://drive.google.com/file/d/1D48q3kgDMGc8YMxzeRqsv6nCChZWT1_b/view';
+      } else if (periodo === 'tarde' && consulta === 'salas') {
+        link = 'https://drive.google.com/file/d/1XRSBMViNVFxVqafAFm6lmKQPw4kdVFyh/view';
+      } else if (periodo === 'manha' && consulta === 'professores') {
+        link = 'https://drive.google.com/file/d/1d8mOtIMI8avP71uPFwkuFEfKwIgFK85r/view';
+      } else if (periodo === 'tarde' && consulta === 'professores') {
+        link = 'https://drive.google.com/file/d/1cRgInPQtgzgCBFoK14evorMnPB39TZgW/view';
+      } else if (consulta === 'reserva' || consulta === 'responsável') {
+        link = 'https://drive.google.com/file/d/18pzuHCD-bfLUu4Lxhny6rppRyzwDz_vh/view';
+      } else if (consulta === 'tabeladoM') {
+        link = 'https://drive.google.com/file/d/12E2IMJpzFLZwhBSqH2tPDfUxo2rGHlOP/view';
+      } else if (consulta === 'tabeladoT') {
+        link = 'https://drive.google.com/file/d/1ii4NNx2EuIRpbXCfeJQi3bwXSqjnnB7A/view';
+      }
+
+      if (link) {
+        document.getElementById('loading').style.display = 'flex';
+        setTimeout(() => window.location.href = link, 900);
+      }
+    }
+
+    function abrirPopup() {
+      if (!localStorage.getItem('popupHoje')) {
+        document.getElementById('popupAviso').style.display = 'flex';
+      }
+    }
+
+    function fecharPopup() {
+      document.getElementById('popupAviso').style.display = 'none';
+    }
+
+    function naoMostrarHoje() {
+      localStorage.setItem('popupHoje', new Date().toLocaleDateString());
+      fecharPopup();
+    }
+
+    window.addEventListener('load', () => {
+      const hoje = new Date().toLocaleDateString();
+      if (localStorage.getItem('popupHoje') !== hoje) {
+        localStorage.removeItem('popupHoje');
+      }
+      abrirPopup();
+    });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+
 </body>
 </html>
